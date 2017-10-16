@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title</title>
+    
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    @RenderSection("Styles", false)
+</head>
+<body style="background-color: #f2f5f6;">
+    <div id="wrapper" data-spy="scroll" data-target="#spy" class="">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="">
+            <nav id="spy">
+                <ul class="sidebar-nav nav">
+                    <li class="sidebar-brand">
+                        <img src="~/Content/Images/BrandGrayFon.png" alt="" />
+                        <span>DT</span>
+                    </li>
+                    <li class="employee">
+                        @Html.Action("ViewEmployee", "Employee")
+                    </li>
+
+                    <li class="project">
+                        @Html.Action("ViewProject", "Project")
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Modal window -->
+        <div id="modDialog" class="modal fade">
+            <div id="dialogContent" class="modal-dialog"></div>
+        </div>
+
+        <!-- Page content -->
+        <!-- nav bar top -->
+        <div id="page-content-wrapper" class="">
+            <div class="content-header">
+
+                <nav class="navbar navbar-default" role="navigation">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li>
+                            @Html.ActionLink("Мои задачи", "Index", "SanctumSanctorum", null, htmlAttributes: new { @class = "just-tasks" })
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            @Html.ActionLink(" ", "Money", "SanctumSanctorum", null, htmlAttributes: new { @class = "dollar", style = "background-image:url(/Content/Images/Wallet.svg); background-repeat: no-repeat; display:block; height:40px; width:40px;" })
+                        </li>
+                        <li>
+                            @Html.Partial("_LoginPartial")
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+
+
+        </div><!-- /Page content -->
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/myscripts")
+    @Scripts.Render("~/bundles/mynextscripts")
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    @RenderSection("scripts", required: false)
+    
+
+</body>
+</html>

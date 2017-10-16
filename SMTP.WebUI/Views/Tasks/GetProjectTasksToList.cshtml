@@ -1,0 +1,143 @@
+﻿@model IEnumerable<SMTP.WebUI.Models.Entities_Models.ProjectTask>
+
+@{
+    var id = ViewBag.Id;
+}
+<div>
+    <input class="btn but-add" type="button" value="Добавить задачу" data-toggle="collapse" data-target="#newline">
+</div>
+<div class="graw-row"></div>
+
+<div class="row collapse" id="newline">
+    @Html.Action("NewProjectTaskRow", new { id = id })
+</div>
+
+
+@for (int i = 0; i < Model.Count(); i++)
+{
+    using (Ajax.BeginForm("UpdateProjectTasks", "Tasks", new { executer = Model.ElementAt(i).ExecuterId }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "new-project" }, new { @role = "form", @id = "myeditForm" }))
+    {
+        <div class="row" id="get-task">
+            <div class="my-row">
+                <div class="col-md-7 my-left-center">
+                    <ul class="nav nav-pills">
+                        <li>
+                            @if (Model.ElementAt(i).StateTask == 2)
+                            {
+                                <div class="saccess">success</div>
+                            }
+                            @if (Model.ElementAt(i).StateTask == 3)
+                            {
+                                <div class="confirmed">confirmed</div>
+                            }
+                        </li>
+                        <li>
+                            @if (Model.ElementAt(i).EndDate < DateTime.Now && Model.ElementAt(i).StateTask != 2 && Model.ElementAt(i).StateTask != 3)
+                            {
+                                <div class="in-work-timeover">time over</div>
+                            }
+                        </li>
+                        <li style="width: 300px;">
+                            @Html.TextAreaFor(model => Model.ElementAt(i).TaskName, htmlAttributes: new { @class = "my-text-area", wrap = "off", rows = "1" })
+                            @Html.ValidationMessageFor(model => Model.ElementAt(i).EndDate, "", new { @class = "text-danger" })
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-5 my-right-right">
+                    <ul class="nav nav-pills my-pills">
+                        <li>
+                            <div class="div-date">
+                                @if (Model.ElementAt(i).EndDate != null)
+                                {
+                                    DateTime date = (DateTime)Model.ElementAt(i).EndDate;
+                                    @Html.Label(date.ToString("d MMM"), htmlAttributes: new { @class = "labl-red" });
+                                }
+                            </div>
+                        </li>
+                        <li class="li-project">
+                            @Html.Action("GetProjectForList", "Project", new { id = Model.ElementAt(i).ProjectId })
+                            @Html.HiddenFor(model => Model.ElementAt(i).ProjectId)
+                        </li>
+                        <li class="many">
+                            <div class="border-money">
+                                @Html.TextBoxFor(model => Model.ElementAt(i).PriceTask, htmlAttributes: new { @class = "give-money" })
+                                <span class="glyphicon glyphicon-usd"></span>
+                            </div>
+                        </li>
+                        <li class="li-my-button">
+                            <div id=@String.Format("employee-employee{0}", i)>
+                                @Html.Action("DropDownEmployeeForList", "Employee", routeValues: new { idEm = Model.ElementAt(i).ExecuterId, model = Model.ElementAt(i), index = i })
+                            </div>
+                        </li>
+                        <li class="more">
+                            <button type="button" class="my-btn" data-toggle="collapse" data-target=@String.Format("#subrow{0}", i)></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row collapse" id=@String.Format("subrow{0}", i)>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="top-top">
+                        <div class="sdvig-left">
+                            <h4 class="h-left">Описание</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="top-top">
+                        <h4 class="h-right">Комментарии</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="my-left-area">
+                        <div class="sdvig-left">
+                            @Html.TextAreaFor(model => Model.ElementAt(i).Discription, htmlAttributes: new { @class = "my-area" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="my-right-area fix">
+                        @Html.TextAreaFor(model => Model.ElementAt(i).Coments, htmlAttributes: new { @class = "my-area" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="calendaric">
+                        <ul class="nav nav-pills">
+                            <li>
+                                @Html.EditorFor(m => m.ElementAt(i).EndDate, new { htmlAttributes = new { @id = String.Format("date{0}", i), @class = "text-editor-calendar", @placeholder = "гггг/мм/дд" } })
+                                @Html.ValidationMessageFor(model => Model.ElementAt(i).EndDate, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => Model.ElementAt(i).TaskId)
+                                @Html.HiddenFor(model => Model.ElementAt(i).StateTask)
+                            </li>
+                            <li>
+                                @Ajax.ActionLink(" ", "ConfirmProjectTask", new { taskid = Model.ElementAt(i).TaskId, projectId = Model.ElementAt(i).ProjectId }, new AjaxOptions { UpdateTargetId = "new-project" }, new { @class = "ok-coin", style = "background-image:url(/Content/Images/Okcoin.svg); background-repeat: no-repeat; display:block; height:20px; width:20px;" })
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="save">
+                        <ul class="nav nav-pills">
+                            <li>
+                               
+                                <input id=@string.Format("save-task{0}",i) type="submit" value="Изменить" class="btn save-t" />
+                            </li>
+                            <li>
+                                @Ajax.ActionLink(" ", "DeleteProjectTask", new { taskid = Model.ElementAt(i).TaskId, projectId = Model.ElementAt(i).ProjectId }, new AjaxOptions { UpdateTargetId = "new-project", Confirm = "Удалить задачу?" }, new { @class = "delete-employee", style = "background-image:url(/Content/Images/hrum-trash.svg); background-repeat: no-repeat; display:block; height:40px; width:40px;" })
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row gr-row">
+                <div class="graw">
+                    <div class="graw-row"></div>
+                </div>
+            </div>
+        </div>
+
+    }
+}

@@ -1,0 +1,73 @@
+﻿@model SMTP.WebUI.Models.RegisterViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Добро пожаловать в DT</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <section class="registration">
+        <div class="container">
+            <div class="row">
+                <div class="contant-row">
+                    <div class="col-md-6">
+                        <img src="~/Content/Images/BrandWight.png" alt="" />
+                    </div>
+                    <div class="col-md-6">
+                        <h1>DT</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-reg">
+                        <h4>Создать новую учетную запись</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="~/Content/Images/Registration_Img.png" alt="" />
+                            </div>
+                            <div class="col-md-8">
+                                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.NickName, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.NickName, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" class="btn btn-default" value="Зарегистрироваться" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+</body>
+</html>

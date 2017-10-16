@@ -1,0 +1,16 @@
+﻿@model IEnumerable<SMTP.WebUI.Models.Entities_Models.Project>
+
+<table class="my-table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="jus-sidebar">
+              
+                @Html.ActionLink(item.ProjectName, "Index", new { projectId = item.ProjectId },  new { @class = "new-task"})
+            </td>
+            <td class="jus-sidebar pull-right">
+                @Html.ActionLink(" ", "Delete", item, new { @class = "delete-employee", style = "background-image:url(/Content/Images/hrum-trash.svg); background-repeat: no-repeat; display:block; height:20px; width:20px;" })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<SMTP.WebUI.Models.Entities_Models.ProjectTask>
+
+<!--/main-->
+<div class="row row-center" id="menu" style="width: 100%;">
+    <div class="col-md-offset-1 col-md-10">
+        <div class="panel panel-default my-tasks">
+            <div class="panel-body" id="mmm">
+                @if (ViewBag.Tasks == null)
+                {
+                    <h2>Список задач пуст!</h2>
+                }
+                else
+                {
+                    <div class="graw-row"></div>
+                    <div id="ajax-replace">
+                        @Html.Action("GetTasksToList", "Tasks", new { model = Model })
+                    </div>
+
+                }
+            </div><!--/panel-body-->
+        </div><!--/panel-->
+    </div>
+</div>

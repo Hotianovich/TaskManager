@@ -1,0 +1,33 @@
+﻿@model SMTP.WebUI.Models.ApplicationUser
+<ul class="nav nav-pills nav-stacked left-menu" id="stacked-menu">
+    <li>
+        <div class="row">
+            <div class="sdvig">
+                <a class="col-md-10" href="#" data-target="#get-employee" data-toggle="collapse" data-parent="#stacked-menu"><span class="caret arrow"></span> Добавить сотрудника</a>
+                <div class="SidebarTeamMembersList col-md-2">
+                    <div class="SidebarTeamMembersList-facepileRow">
+                        <a href="@Url.Action("AddEmployee", "Employee", new { id = Model.Id})" class="CircularButton EmployeeAdd" tabindex="0" role="button" aria-disabled="false">
+                            <div class="CircularButton-label">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="Icon PlusIcon" viewBox="0 0 32 32">
+                                    <polygon points="28,14 18,14 18,4 14,4 14,14 4,14 4,18 14,18 14,28 18,28 18,18 28,18"></polygon>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <ul class="nav nav-stacked collapse in left-submenu" id="get-employee">
+            @Html.Action("GetEmployee", new { id = Model.Id })
+        </ul>
+    </li>
+</ul>
+
+
+
+
+
+
+

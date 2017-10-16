@@ -1,0 +1,33 @@
+﻿@model SMTP.WebUI.Models.Entities_Models.Project
+
+<div class="modal-content" id="my-modal">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h4>Новый проект</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <section id="EddEmployeeForm">
+                    @using (Ajax.BeginForm("AddProject", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "get-project" }, new { role = "form", id = "add-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group my-gruop">
+                            @Html.LabelFor(m => m.ProjectName, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control",  onkeyup = "projectname()", id = "project-name" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-md-10">
+                                <input onclick="clearTextarea();" id="send-project" type="submit" value="Добавить" class="btn btn-default" disabled />
+                            </div>
+                        </div>
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+

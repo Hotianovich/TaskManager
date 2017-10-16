@@ -1,0 +1,21 @@
+﻿@model SMTP.WebUI.Models.Entities_Models.Employee
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- nav bar lower -->
+<nav class="navbar navbar-default my-navbar-default" style="border-top-width: 0px; height: 60px; padding-top:10px;" role="navigation">
+    <div class="navbar-header">
+        <p class="my-text" id="text">Задачи @Model.NickName</p>
+    </div>
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-left"></ul>
+        <ul class="nav navbar-nav navbar-right"></ul>
+    </div>
+</nav>
+
+<div id="new-task">
+    @Html.Action("ViewEmployeeTasks", "Tasks", new { employee = Model })
+</div>

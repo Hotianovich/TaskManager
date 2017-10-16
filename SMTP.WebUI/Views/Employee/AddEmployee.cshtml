@@ -1,0 +1,46 @@
+﻿@model SMTP.WebUI.Models.Entities_Models.Employee
+
+<div class="modal-content" id="my-modal">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h4>Добавить сотрудника</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <section id="EddEmployeeForm">
+                    @using (Ajax.BeginForm("AddEmployee", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions {HttpMethod = "Post", UpdateTargetId = "get-employee" }, new { @class = "form-horizontal", role = "form", id="add-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.NickName, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.NickName, new { @class = "form-control", onkeyup = "check()", id = "input1" })
+                                @Html.ValidationMessageFor(m => m.NickName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", onkeyup = "check()", id = "input2" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                <span id="valid"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input onclick="clearTextarea();" id="send" type="submit" value="Добавить" class="btn btn-default" disabled  />
+                            </div>
+                        </div>
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>

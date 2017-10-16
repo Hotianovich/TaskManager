@@ -1,0 +1,35 @@
+﻿@using SMTP.WebUI.Models.Entities_Models
+@model ProjectTask
+
+
+
+@{
+    string emplName = ViewBag.emplName;
+    var idEmpl = ViewBag.Id;
+}
+
+<div class="btn-group">
+    <button type="button" class="btn my-round-button dropdown-toggle" data-toggle="dropdown">
+        @if (idEmpl == null)
+        {
+            @Html.Label("+", new { @class = "plus" })
+            @Html.HiddenFor(model => Model.ExecuterId, htmlAttributes: new { @Value = ViewBag.Boss, @name = "empl", @class = "no-plus" })
+        }
+        else
+        {
+            @Html.Label(emplName.Substring(0, 2))
+            @Html.HiddenFor(model => Model.ExecuterId, htmlAttributes: new { @Value = idEmpl, @name = "empl", @class = "no-plus" })
+        }
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        @foreach (var item in (IEnumerable<Employee>)ViewBag.All)
+            {
+            <li>
+                @Ajax.ActionLink(item.NickName, "DropDownEmployee", new { idEm = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "employee-employee" }, new { @class = "project-ajax" })
+                @Html.ValidationMessageFor(modelItem => item.NickName)
+            </li>
+        }
+    </ul>
+
+
+</div>

@@ -1,0 +1,86 @@
+﻿@model SMTP.WebUI.Models.Entities_Models.ProjectTask
+
+<div class="row" style="margin-bottom: 5px; height:123px;" >
+    <div class="my-row-row">
+            @using (Ajax.BeginForm("AddTask", "Tasks", null, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "new-task" }, new { @role = "form", @id = "myForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+                <div class="row">
+                    <div class="col-md-7 my-left-center">
+                        @Html.TextAreaFor(model => Model.TaskName, htmlAttributes: new { @class = "my-text-area", id = "textTN", wrap = "off", rows = "1", @placeholder = "Введите задачу", @name = "taskName" })
+                        @Html.ValidationMessageFor(m => Model.TaskName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-5 my-right-right">
+                        <ul class="nav nav-pills my-pills">
+                            <li class="li-project">
+                                <div class="project-list jast-list" id="project-project">
+                                    @Html.Action("Side", "Project", new { model = Model })
+                                    @Html.ValidationMessageFor(m => Model.ProjectId, "", new { @class = "text-danger" })
+                                </div>
+                            </li>
+                            <li class="li-my-button">
+                                <div class="my-button">
+                                    @Html.Action("EmployeeForList", "Employee", routeValues: new { id = ViewBag.Id })
+                                    @Html.HiddenFor(model => Model.ExecuterId, htmlAttributes: new { @Value = ViewBag.Id })
+                                    @Html.HiddenFor(model => Model.StateTask, htmlAttributes: new { @Value = 1 })
+                                </div>
+                            </li>
+                            <li class="many">
+                                <div class="border-money">
+                                    @Html.TextBoxFor(model => model.PriceTask, htmlAttributes: new { @class = "give-money", @placeholder = "$" })
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="top-top">
+                                <h4 class="h-left">Описание</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="top-top">
+                                <h4 class="h-right">Комментарии</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="my-left-area">
+                                @Html.TextAreaFor(model => Model.Discription, htmlAttributes: new { @class = "my-area" })
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="my-right-area fix">
+                                @Html.TextAreaFor(model => Model.Coments, htmlAttributes: new { @class = "my-area" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="calendaric">
+                                @Html.Partial("_DatePicker", Model)
+                                @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="save">
+                                <input id="save-task" type="submit" value="Добавить" class="btn save-t" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gr-row">
+                        <div class="graw">
+                            <div class="graw-row" style="margin-left: 0px; margin-right: 0px;"></div>
+                        </div>
+                    </div>
+                </div>
+            }
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/MyScripts.js"></script>

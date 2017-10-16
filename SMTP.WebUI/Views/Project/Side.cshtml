@@ -1,0 +1,32 @@
+﻿@using SMTP.WebUI.Models.Entities_Models
+@model ProjectTask
+
+@{
+    var prName = ViewBag.proName ?? "Выберите проект";
+    var idPr = ViewBag.Id;
+}
+
+<div class="btn-group">
+
+    @Html.Label((string)prName)
+    @Html.HiddenFor(model => Model.ProjectId, htmlAttributes: new { @Value = idPr, @name = "pro"})
+  
+
+
+  <button type="button" class="btn smole-button dropdown-toggle" data-toggle="dropdown">
+        <span class="caret new-caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+
+        @foreach (var item in (IEnumerable<Project>)ViewBag.All)
+            {
+            <li>
+                @Ajax.ActionLink(item.ProjectName, "Side", new { projectName = item.ProjectName, idPr = item.ProjectId }, new AjaxOptions { UpdateTargetId = "project-project" }, new { @class = "project-ajax" })
+                @Html.ValidationMessageFor(modelItem => item.ProjectName)
+            </li>
+        }
+
+    </ul>
+
+
+</div>

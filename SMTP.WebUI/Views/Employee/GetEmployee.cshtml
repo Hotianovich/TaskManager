@@ -1,0 +1,27 @@
+﻿@model IEnumerable<SMTP.WebUI.Models.Entities_Models.Employee>
+
+<table class="my-table">
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <tr>
+            @if (i == 0)
+            {
+                <td class="jus-sidebar">
+                    @Html.Label(Model.ElementAt(i).NickName, htmlAttributes: new { @class = "my" })
+                </td>
+            }
+            else
+            {
+                <td class="jus-sidebar">
+                    @Html.ActionLink(Model.ElementAt(i).NickName, "Index", new { Employeeid = Model.ElementAt(i).EmployeeId }, htmlAttributes: new { @class = "employee-task" })
+                </td>
+                <td class="jus-sidebar pull-right">
+                    @Html.ActionLink(" ", "Delete", Model.ElementAt(i), new { @class = "delete-employee", style = "background-image:url(/Content/Images/hrum-trash.svg); background-repeat: no-repeat; display:block; height:20px; width:20px;" })
+                </td>
+            }       
+        </tr>
+    }
+</table>
+
+
+

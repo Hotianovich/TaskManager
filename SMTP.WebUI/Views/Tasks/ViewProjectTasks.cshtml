@@ -1,0 +1,17 @@
+﻿@model IEnumerable<SMTP.WebUI.Models.Entities_Models.ProjectTask>
+
+@{
+    var id = ViewBag.PrId;
+}
+
+<div class="row row-center" id="menu" style="width: 100%;">
+    <div class="col-md-offset-1 col-md-10">
+        <div class="panel panel-default my-tasks">
+            <div class="panel-body">
+                <div>
+                    @Html.Action("GetProjectTasksToList", "Tasks", new { model = Model, projId = id })
+                </div>
+            </div><!--/panel-body-->
+        </div><!--/panel-->
+    </div>
+</div>
